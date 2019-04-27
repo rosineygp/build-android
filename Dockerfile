@@ -4,7 +4,9 @@ ENV SDK_HOME /usr/local
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -q -y && \ 
-    apt-get install -q --yes wget tar unzip lib32stdc++6 lib32z1 git --no-install-recommends && \
+    apt-get install -q --yes wget tar unzip lib32stdc++6 lib32z1 git ruby-dev build-essential --no-install-recommends && \
+    gem install fastlane && \
+    apt-get remove build-essential -y && \
     apt-get autoclean -y && \
     rm -rf /var/lib/apt/lists/*
 
@@ -27,5 +29,3 @@ RUN echo yes | $ANDROID_HOME/tools/bin/sdkmanager "tools" "platform-tools" > /de
 RUN echo yes | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" > /dev/null
 RUN echo yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-21" > /dev/null
 RUN echo yes | $ANDROID_HOME/tools/bin/sdkmanager "platforms;android-28" > /dev/null
-
-WORKDIR /code
